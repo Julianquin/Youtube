@@ -2,6 +2,7 @@
 Este proyecto es una prueba para entretenerme en vacaciones
 
 realizaremos video tutoriales explicando lo aprendido en la carrera utilizando el software estadistico R Studio.
+0. Como descargar e instalar R y R Studio
 
 1. Analisis Exploratorio de datos
   Variables cuantitativas
