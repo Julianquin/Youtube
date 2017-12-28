@@ -30,3 +30,23 @@ cor(Reaccion,Rating)
 
 
 # Variables Categoricas
+
+# Tablas de frecuencia
+
+table(Posicion.Club)
+table(Pierna.preferida)
+table(Ritmo.de.trabajo)
+t1 <- table(Pierna.preferida,Ritmo.de.trabajo)
+
+install.packages("gmodels")
+library("gmodels")
+CrossTable(Ritmo.de.trabajo,Pierna.preferida,prop.r = F,prop.t = F,prop.c = F,prop.chisq = F)
+
+
+# Grafico de barras
+x11();plot(Posicion.Club, horiz=T , las=2) 
+
+x11();plot(Ritmo.de.trabajo,Pierna.preferida)
+
+x11();par(mar=c(8, 4, 4, 2))
+barplot(t1,las=2) # horiz=T
