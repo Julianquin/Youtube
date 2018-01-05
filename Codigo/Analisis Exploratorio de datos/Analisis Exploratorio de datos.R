@@ -2,7 +2,8 @@
 #########  Analisis Exploratorio de datos  ###########
 ######################################################
 setwd("D:/Tematicas/Nueva carpeta/vacaciones")
-fifa17 <- read.csv("FullData.csv",header = T, sep = ";")
+
+fifa17 <- read.csv("Datos/FullData.csv",header = T, sep = ";")
 str(fifa17)
 
 datos <- fifa17[1:100,]
@@ -40,11 +41,11 @@ t1 <- table(Pierna.preferida,Ritmo.de.trabajo)
 
 install.packages("gmodels")
 library("gmodels")
-CrossTable(Ritmo.de.trabajo,Pierna.preferida,prop.r = F,prop.t = F,prop.c = F,prop.chisq = F)
+CrossTable(Ritmo.de.trabajo,Pierna.preferida,prop.r = F,prop.t = T,prop.c = F,prop.chisq = F)
 
 
 # Grafico de barras
-x11();plot(Posicion.Club, horiz=T , las=2) 
+x11();plot(Posicion.Club, las=2) 
 
 x11();plot(Ritmo.de.trabajo,Pierna.preferida)
 
