@@ -1,6 +1,9 @@
 # -----------------------------------------------------------------
 # Tipos de datos simples
 # -----------------------------------------------------------------
+
+# Podemos obtener la clase y tipo de cualquier dato, ya sea constante o una variable,
+# mediante las siguientes funciones:
 class(45)
 class(34.5)
 class("R")
@@ -17,33 +20,59 @@ typeof(Inf)
 typeof(1+2i)
 typeof(NaN)
 
+# Para los tipos de datos simples, en general la clase y el tipo coinciden salvo en
+# el caso de datos numericos no enteros, cuya clase es numeric siendo su tipo double.
 
 # -----------------------------------------------------------------
 # Asignación de valores a variables
 # -----------------------------------------------------------------
+
+# El operador de asignacion habitual en R es <-, pero tambien puede utilizarse = y ->
 a <- 45
 a
 
 a = 3.1416
 a
 
-"Hola" -> a
-a
+"Hola" -> b
+b
+
+
+# -----------------------------------------------------------------
+# Comprovar tipo de variable
+# -----------------------------------------------------------------
+# is.TIPO(objeto)
+# Las funciones is.numeric(), is.character(), is.integer(), is.infinite() e is.na() 
+# devolviendo TRUE en caso armativo o FALSE en caso contrario.
 
 is.integer(a)
-is.character(a)
+is.numeric(a)
+is.character(b)
+is.integer(b)
+is.character(b)
 
 # -----------------------------------------------------------------
-# Variables en el espacio de trabajo
+# Objetos en el espacio de trabajo
 # -----------------------------------------------------------------
+# A medida que vayamos almacenando valores en variables, se guardan
+# en nuestro espacio de trabajo Environment
+
+
+# vector  de caracteres conteniendo los nombres de los objetos existentes 
 ls()
+
+# Elimina objeto de nuestro entorno de trabajo
 rm(a)
+
 ls()
 
 
 # -----------------------------------------------------------------
 # Vectores: Creación 
 # -----------------------------------------------------------------
+
+# la funcion mas usada para generar vectores es c()
+
 diasMes <- c(31,29,31,30,31,30,31,31,30,31,30,31)
 dias <- c('Lun','Mar','Mié','Jue','Vie','Sáb','Dom')
 
@@ -63,15 +92,17 @@ rep(c(T,F), 5)
 # -----------------------------------------------------------------
 # Vectores: Acceso al contenido
 # -----------------------------------------------------------------
+# Tamaño del vector
+
 length(dias)
 length(semanas)
 
 dias[2]  	# Solo el segundo elemento
 dias[-2]	# Todos los elementos menos el segundo
 dias[c(3,7)]# Los elementos 3 y 7
+# -----------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
 
-length(5)
-5[1]
 
 # -----------------------------------------------------------------
 # Vectores: Generación de valores aleatorios
