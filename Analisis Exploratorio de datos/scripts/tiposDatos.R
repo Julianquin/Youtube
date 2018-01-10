@@ -100,23 +100,27 @@ length(semanas)
 dias[2]  	# Solo el segundo elemento
 dias[-2]	# Todos los elementos menos el segundo
 dias[c(3,7)]# Los elementos 3 y 7
-# -----------------------------------------------------------------------------------
-# -----------------------------------------------------------------------------------
 
 
 # -----------------------------------------------------------------
 # Vectores: Generación de valores aleatorios
 # -----------------------------------------------------------------
+
+# generacion de valores aleatorios con la semilla facilitada como parametro.
 set.seed(4242)
 rnorm(100, mean=10, sd=3)
 loto <- as.integer(runif(6, min=1, max=49))
 loto
 
 # Diferencia entre rnorm (distribución normal) y runif (distribución uniforme)
-prev <- par(mfrow=c(1,2))
+par(mfrow=c(1,2))
 hist(rnorm(1000))
 hist(runif(1000))
-par(prev)
+
+x11()
+par(mfrow=c(1,2))
+plot(density(rnorm(1000)))
+plot(density(runif(1000)))
 
 
 # -----------------------------------------------------------------
@@ -180,9 +184,14 @@ mes['Semana4',]
 # -----------------------------------------------------------------
 # Matrices: Otras operaciones
 # -----------------------------------------------------------------
+# editar interactivamente el contenido de una matriz utilizando la funcion fix()
 fix(mes)
 str(mes)
 
+
+
+# -----------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------------
 # -----------------------------------------------------------------
 # Factors
 # -----------------------------------------------------------------
@@ -198,10 +207,11 @@ nlevels(fdias)
 levels(fdias)
 levels(fdias)[1] <- 'Sun'
 
+# ordered() Actua como factor, pero estableciendo una relacion de orden entre los valores
 peso <- ordered(c('Ligero','Medio','Pesado'))
 tam <- peso[c(sample(peso,25,replace=T))]
 tam
-tam[2] < tam[1]
+tam[5] < tam[1]
 
 dias[3]
 fdias[3]
