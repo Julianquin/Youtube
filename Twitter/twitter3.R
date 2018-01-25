@@ -22,26 +22,26 @@ dm$getSenderID()
 #---------------------------------------------------------------------------------
 # Estas funciones le permiten interactuar, enviar y eliminar mensajes directos (DM) en Twitter.
 
-dms <- dmGet()
+dms <- dmGet(n=10)
 dms
 ## delete the first one
 dms[[1]]$destroy()
 dmDestroy(dms[[2]])
 ## send a DM
-dmSend('Testing out twitteR!', 'twitter')
+dmSend('Mensaje de prueba', 'julianquin01')
 
 #---------------------------------------------------------------------------------
 # Devuelve los n Ãºltimos tweets favoritos del usuario especificado.
 
-favorites("JERobledo", n=200)
+favs <- favorites("sergio_fajardo", n=200)
 
 #---------------------------------------------------------------------------------
 # Esta funciÃ³n aceptarÃ¡ una lista de otros usuarios de Twitter y detallarÃ¡ si te siguen y / o los siguen.
-friendships(c("JERobledo"))
+amistad <- friendships(c("sergio_fajardo","julianquin01"))
 
 #---------------------------------------------------------------------------------
-# RecuperarÃ¡ la informaciÃ³n de lÃ?mite de velocidad actual para el usuario autenticado, 
-# que se muestra como un marco de datos que muestra informaciÃ³n especÃ?fica para cada recurso de Twitter
+# RecuperarÃ¡ la informaciÃ³n de limite de velocidad actual para el usuario autenticado, 
+# que se muestra como un marco de datos que muestra informaciÃ³n espec??fica para cada recurso de Twitter
 
 getCurRateLimitInfo()
 
@@ -58,32 +58,39 @@ trends <- getTrends(woeid=woeidCali)
 
 #---------------------------------------------------------------------------------
 # Estas funciones le permiten interactuar con informaciÃ³n sobre un usuario de Twitter, 
-# recuperando su informaciÃ³n base, lista de amigos, lista de seguidores y una lÃ?nea de tiempo actualizada.
+# recuperando su informaciÃ³n base, lista de amigos, lista de seguidores y una l??nea de tiempo actualizada.
 usuario <- getUser("JERobledo")
+followers <- usuario$getFollowerIDs() # Se limita 
+favs.us <- usuario$getFavorites(n=200)
+follow <-usuario$getFollowers() #se limita
+data.frame <- usuario$toDataFrame()
+
 
 users <- lookupUsers(c('JERobledo', 'petrogustavo'))
+followers <- users$petrogustavo$getFollowerIDs() # Se limita igual al comando anterior
+
 
 # Dado un back-end de base de datos registrado que contiene una tabla de tweets, 
-# devolverá el ID del tweet más reciente almacenado en esa tabla
+# devolver? el ID del tweet m?s reciente almacenado en esa tabla
 #register_sqlite_backend("sqlit_file")
 #get_latest_tweet_id("rstats_tweets")
 
 #---------------------------------------------------------------------------------
-# Funciones diseñadas para importar datos en objetos twitteR de una variedad de fuentes de datos. 
+# Funciones dise?adas para importar datos en objetos twitteR de una variedad de fuentes de datos. 
 # Actualmente, solo se admite JSON, y toda esta rama de funcionalidad debe considerarse experimental
 # y en desarrollo.
 #status_list = import_statuses(list_of_status_json)   
 
 #---------------------------------------------------------------------------------
 # Estas funciones permiten a un usuario almacenar datos basados en twitteR en un back-end de base de datos, 
-# así como recuperar datos previamente almacenados
+# as? como recuperar datos previamente almacenados
 # tweets = searchTwitter("#scala")
 # store_tweets_db(tweets)
 # from_db = load_tweets_db()
 
 #---------------------------------------------------------------------------------
 # twitteR puede tener un backend de base de datos registrado desde donde almacenar y cargar tweets y 
-# datos de usuario. Estas funciones proporcionan mecanismos para configurar la conexión dentro de twitteR
+# datos de usuario. Estas funciones proporcionan mecanismos para configurar la conexi?n dentro de twitteR
 # register_db_backend 
 
 #---------------------------------------------------------------------------------
@@ -96,7 +103,7 @@ st$retweetCount
 st$text
 
 #---------------------------------------------------------------------------------
-# Esta función emitirá una búsqueda de Twitter basada en una cadena de búsqueda proporcionada.
+# Esta funci?n emitir? una b?squeda de Twitter basada en una cadena de b?squeda proporcionada.
 
 x1 <- searchTwitter("el Cali+America", n=2000, lang="es")
 x2 <- sapply(x1, function(x) x$getText())
@@ -125,7 +132,7 @@ cleanTweets<- function(tweet){
   # finally, we remove unnecessary spaces (white spaces, tabs etc)
   tweet = gsub("[ \t]{2,}", " ", tweet)
   tweet = gsub("^\\s+|\\s+$", "", tweet)
-  # si algo mÃ¡s, sientes, deberÃ?as eliminar, puedes.   Por ejemplo, "palabras de argot", etc. usando la funciÃ³n y los mÃ©todos anteriores.
+  # si algo mÃ¡s, sientes, deber??as eliminar, puedes.   Por ejemplo, "palabras de argot", etc. usando la funciÃ³n y los mÃ©todos anteriores.
   # A continuaciÃ³n, convertiremos todas las palabras en minÃºsculas.   This makes uniform pattern.
   tweet = catch.error(tweet)
   tweet
@@ -160,7 +167,7 @@ getSentimentScore = function(sentences, words.positive,words.negative, .progress
   require(stringr)
   scores = laply(sentences,
                  function(sentence, words.positive, words.negative) {
-                   # Primero elimine el dÃ?gito, el carÃ¡cter de puntuaciÃ³n y los caracteres de control:
+                   # Primero elimine el d??gito, el carÃ¡cter de puntuaciÃ³n y los caracteres de control:
                    sentence = gsub('[[:cntrl:]]', '', gsub('[[:punct:]]', '',
                                                            gsub('\\d+', '', sentence)))
                    # Luego, convierta todas las frases a mayÃºsculas y minÃºsculas:
@@ -185,26 +192,26 @@ opinion.lexicon.neg =  scan('palabras negativas.txt', what='character', comment.
 x5 <- getSentimentScore(x3,opinion.lexicon.pos,opinion.lexicon.neg)
 
 #---------------------------------------------------------------------------------
-# Una función de conveniencia diseñada para envolver el proceso de ejecutar una búsqueda de Twitter 
-# y enviar los resultados a una base de datos. Si se llama más de una vez, la búsqueda comenzará con
-# el tweet más reciente ya almacenado.
+# Una funci?n de conveniencia dise?ada para envolver el proceso de ejecutar una b?squeda de Twitter 
+# y enviar los resultados a una base de datos. Si se llama m?s de una vez, la b?squeda comenzar? con
+# el tweet m?s reciente ya almacenado.
 # register_sqlite_backend("sqlit_file")
 # n = search_twitter_and_store("#rstats", "rstats_tweets")
 
 #---------------------------------------------------------------------------------
-# Esta función ajusta las funciones de handshake de autenticación OAuth del paquete httr para una sesión twitteR
+# Esta funci?n ajusta las funciones de handshake de autenticaci?n OAuth del paquete httr para una sesi?n twitteR
 setup_twitter_oauth("uj7Vm9SsAAURaFK6Sv2kXofHb", # "your_api_key"
                     "fJFci7FWFShUIauKf22qrp6wzG0aBFi0k0sSnn0yumGHbr8Qo0",  #"your_api_secret"
                     "865788214707138560-Lj7aSLC8020HspFL8CdLpj13LHiBoYO", # "your_access_token"
                     "iNkNYWwFDiQjS19YeD9U1BDtSExOCXDqv7n48nizeTJzQ") # "your_access_token_secret"
 
 #---------------------------------------------------------------------------------
-# Estas funciones se pueden usar para recuperar tweets específicos del servidor
+# Estas funciones se pueden usar para recuperar tweets espec?ficos del servidor
 x <- showStatus(tweet)
 x <- lookup_statuses(c(tweet))
 
 #---------------------------------------------------------------------------------
-# Contenedor para mensajes de estado de Twitter, incluido el texto y la información básica
+# Contenedor para mensajes de estado de Twitter, incluido el texto y la informaci?n b?sica
 st <- statusFactory$new(screenName="test", text="test message")
 st$getScreenName()
 st$getText()
@@ -214,25 +221,25 @@ st$getScreenName()
 
 
 #---------------------------------------------------------------------------------
-# Dada una lista de objetos de estado, eliminará retweets de la lista para proporcionar 
+# Dada una lista de objetos de estado, eliminar? retweets de la lista para proporcionar 
 # un conjunto "puro" de tweets.
 tweets <- searchTwitter("cali")
 no_retweets <- strip_retweets(tweets)
 
 #---------------------------------------------------------------------------------
-# Esta función ejecutará una expresión R y enviará un mensaje directo a un usuario 
-# especificado en caso de éxito o fracaso.
+# Esta funci?n ejecutar? una expresi?n R y enviar? un mensaje directo a un usuario 
+# especificado en caso de ?xito o fracaso.
 # taskStatus(z<-5, "JERobledo", session=sess)
 
 #---------------------------------------------------------------------------------
-# Estas funciones le permitirán recuperar varias líneas de tiempo dentro del universo de Twitter
+# Estas funciones le permitir?n recuperar varias l?neas de tiempo dentro del universo de Twitter
 ut <- userTimeline("JERobledo", n=100) # tweets de un usuario
 ut <- homeTimeline(n=25) # tweets en mi pagina de inicio
 ut <- mentions(n=20) # tweets en los que me mencionan
 ut <- retweetsOfMe(n=20) # retweets que me han hecho
 
 #---------------------------------------------------------------------------------
-# Esta función tomará una lista de objetos de una única clase twitteR y devolverá una versión de data.frame 
+# Esta funci?n tomar? una lista de objetos de una ?nica clase twitteR y devolver? una versi?n de data.frame 
 # de los miembros
 zz <- searchTwitter("Cali")
 x <- twListToDF(zz)
@@ -244,7 +251,7 @@ ns <- updateStatus("this is my new status message")
 deleteStatus(ns)
 
 #---------------------------------------------------------------------------------
-# Esta clase está diseñada para representar a un usuario en Twitter, modelando información disponible
+# Esta clase est? dise?ada para representar a un usuario en Twitter, modelando informaci?n disponible
 # us <- userFactory$new(screenName="test", name="Joe Smith")
 # us$getScreenName()
 # us$getName()
@@ -254,7 +261,7 @@ deleteStatus(ns)
 # us$getScreenName()
 
 #---------------------------------------------------------------------------------
-# Esta función usa un Token Oatuth httr existente en la sesión de Twitter
+# Esta funci?n usa un Token Oatuth httr existente en la sesi?n de Twitter
 
 use_oauth_token(twitter_token)
 
