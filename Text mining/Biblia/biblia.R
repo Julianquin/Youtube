@@ -23,7 +23,7 @@ library(RColorBrewer)
 
 
 ################################
-acuerdos <- read_lines("Datos/BIBLIA COMPLETA1.txt") #leyendo el documento 49836-0.txt desde la linea 419 hasta la linea 8313
+acuerdos <- read_lines("Text mining/Biblia/BIBLIA COMPLETA1.txt") #leyendo el documento 49836-0.txt desde la linea 419 hasta la linea 8313
 str(acuerdos)  #El objeto acuerdo que obtuvimos es uno de tipo character, con 32937 elementos.
 
 

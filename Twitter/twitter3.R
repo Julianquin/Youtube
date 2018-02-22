@@ -53,14 +53,16 @@ getCurRateLimitInfo()
 
 Locs <- availableTrendLocations()
 LocsCol <- subset(Locs, country == "Colombia")
+woeidCol <- subset(LocsCol, name == "Colombia")$woeid
 woeidCali <- subset(LocsCol, name == "Cali")$woeid
 trends <- getTrends(woeid=woeidCali)
 
 #---------------------------------------------------------------------------------
 # Estas funciones le permiten interactuar con información sobre un usuario de Twitter, 
 # recuperando su información base, lista de amigos, lista de seguidores y una l??nea de tiempo actualizada.
-usuario <- getUser("JERobledo")
-followers <- usuario$getFollowerIDs() # Se limita 
+usuario.petro <- getUser("petrogustavo")
+# followers.petro <- usuario.petro$getFollowerIDs()
+followers.petro <- usuario.petro$getFollowers()# Se limita 
 favs.us <- usuario$getFavorites(n=200)
 follow <-usuario$getFollowers() #se limita
 data.frame <- usuario$toDataFrame()
